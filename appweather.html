@@ -1,0 +1,104 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/appstyle.css">
+</head>
+
+<body style="background: url(./assets/Img/pink\ blue.jpg);background-repeat: no-repeat;background-size: cover;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 p-2">
+                <input type="text" class="col-8 p-2" placeholder="Enter The City Name You want To Search" id="input">
+                <input type="submit" value="Submit" class="button col-3 btn-primary p-2">
+            </div>
+
+            <div class="col-12 bg-dark p-3 text-center text-white fw-bold mt-3 display-5" id="city">CityName
+            </div>
+            <div class="col-lg-4 mt-5 text-center">
+                <div class="card " style="width: 18rem; height: 10rem;">
+                    <div class="card-body">
+                        <h2 class="card-title">Tempreture</h2>
+                        <h4 class="card-text mt-5 text-danger" id="temp">Tempreture</h4>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mt-5 text-center">
+                <div class="card " style="width: 18rem; height: 10rem;">
+                    <div class="card-body">
+                        <h2 class="card-title">Presure</h2>
+                        <h4 class="card-text mt-5 text-danger" id="pre">Presure</h4>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center mt-5">
+                <div class="card " style="width: 18rem; height: 10rem;">
+                    <div class="card-body">
+                        <h2 class="card-title">Wind Gusture</h2>
+                        <h4 class="card-text mt-5 text-danger" id="wind">gust</h4>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center mt-5">
+                <div class="card " style="width: 18rem; height: 10rem;">
+                    <div class="card-body">
+                        <h2 class="card-title">Wind speed</h2>
+                        <h4 class="card-text mt-5 text-danger" id="speed">speed</h4>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center mt-5">
+                <div class="card " style="width: 18rem; height: 10rem;">
+                    <div class="card-body">
+                        <h2 class="card-title">Wind Degree</h2>
+                        <h4 class="card-text mt-5 text-danger" id="degree">Degree</h4>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script>
+
+    var city = document.querySelector('#input');
+    var button = document.querySelector('.button');
+    button.addEventListener('click', function () {
+        var app = 'https://api.openweathermap.org/data/2.5/weather?q=' + city.value + '&lang=da&units=metric&APPID=4b42ecc61fd13e0a0cb7006d583fb3e0';
+        console.log(app);
+        fetch(app)
+            .then(async app => {
+                var response = await app.json();
+                console.log(response);
+                temp = response['main']['temp'];
+                presure = response['main']['pressure'];
+                console.log(presure);
+                name = response['name'];
+                console.log(temp, name)
+                wind = response['wind']['gust'];
+                wSpeed = response['wind']['speed'];
+                wDeg = response['wind']['deg'];
+                console.log(city);
+                document.getElementById('temp').innerText = temp;
+                document.getElementById('pre').innerText = presure;
+                document.getElementById('wind').innerText = wind;
+                document.getElementById('speed').innerHTML = wSpeed;
+                document.getElementById('degree').innerHTML = wDeg;
+                var city = document.getElementById('city').innerText = name;
+                console.log(city);
+            })
+            .catch(err => alert('Wrong City Name'));
+    })
+</script>
+
+</html>
